@@ -50,14 +50,44 @@ typedef struct __attribute__((packed))
 // Function Prototypes
 //**************************************************
 
+/**
+ * @brief Registers the digital output module within the Web Server context.
+ * This function performs the necessary setup for remote output control:
+ *
+ * 1. Registers the GET handler (`/api/digital-output`) to allow web clients 
+ * to poll the current state of any specific digital output.
+ *
+ * 2. Registers the POST handler (`/api/digital-output`) to allow remote 
+ * switching of output states via JSON payloads.
+ *
+ * @param server Handle to the active HTTP server instance where the URIs will be registered.
+ * @return
+ * - ESP_OK: All URI handlers registered successfully.
+ *
+ * - ESP_FAIL: Failed to register one or more URI handlers.
+ */
 esp_err_t digital_output_register(httpd_handle_t server);
-
-esp_err_t digital_input_register(httpd_handle_t server);
 
 esp_err_t events_register(httpd_handle_t server);
 
 esp_err_t events_send(event_t *event);
 
+/**
+ * @brief Registers the web server as an observer of analog input events.
+ * @param server Handle to the running HTTP server instance.
+ * @return
+ * - ESP_OK: Registration successful.
+ *
+ * - ESP_FAIL: Failed to attach the event handler.
+ */
 esp_err_t analog_input_register(httpd_handle_t server);
 
+/**
+ * @brief Subscribes the web server to environment sensor updates.
+ * @param server Handle to the running HTTP server instance.
+ * @return
+ * - ESP_OK: Successfully registered as a sensor observer.
+ *
+ * - ESP_FAIL: Failed to register the event handler.
+ */
 esp_err_t sensor_register(httpd_handle_t server);
